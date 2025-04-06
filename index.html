@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Météo</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>MeteoJS - A simple weather app</title>
+    <meta name="description" content="MeteoJS - A simple weather app using JavaScript and OpenWeatherMap API">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <script src="https://unpkg.com/feather-icons"></script>
+    <script src="js/config.js" defer></script>
+    <script src="js/functions.js" defer></script>
     <script src="js/main.js" defer></script>
 </head>
 <body>
@@ -51,8 +55,13 @@
             </div>
             <div class="location-container">
                 <button class="location-button"> <i data-feather="map-pin"></i><span>Changer de ville</span></button>
+                
             </div>
         </div>
     </div>
+    <footer class="main-footer">
+        <p>Copyright © 2025 Jonathan GANIVET, tous droits réservés.<br>
+            Données météorologiques fournies par <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a></p>
+    </footer>
 </body>
 </html>
