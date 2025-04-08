@@ -1,11 +1,23 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700,900&display=swap');
 
 :root {
     --gradient: linear-gradient(135deg, #72EDF2 10%, #5151E5 100%);
+    --title-color: #6dd5ed; /* Cyan comme exemple */
+    --spacing-small: 0.625em; /* 10px base 16px */
+    --spacing-medium: 1.25em; /* 20px base 16px */
+    --spacing-large: 1.5625em; /* 25px base 16px */
+    --border-radius-small: 0.625em; /* 10px base 16px */
+    --border-radius-medium: 1.5625em; /* 25px base 16px */
+    --shadow-small: 0 0 0.4375em -0.0625em rgba(0, 0, 0, 0.2); /* 7px -1px */
+    --shadow-medium: 0 0 4.375em -0.625em rgba(0, 0, 0, 0.2); /* 70px -10px */
+    --shadow-large: 0 0 1.25em -0.625em rgba(0, 0, 0, 0.2); /* 20px -10px */
+    --font-size-small: 0.875em; /* 14px base 16px */
+    --font-size-medium: 1em; /* 16px base 16px */
+    --font-size-large: 2.5em; /* 40px base 16px */
 }
 
 * {
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     line-height: 1.25em;
 }
@@ -16,247 +28,241 @@
 
 body {
     margin: 0;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     font-family: 'Montserrat', sans-serif;
     background-color: #343d4b;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em; /* Taille de base pour les unités rem et em */
 }
 
 .container {
-    border-radius: 25px;
-    -webkit-box-shadow: 0 0 70px -10px rgba(0, 0, 0, 0.2);
-            box-shadow: 0 0 70px -10px rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-medium);
     background-color: #222831;
     color: #ffffff;
-    height: 400px;
+    /* Hauteur relative à la taille de la police du parent */
+    height: 25em; /* Si font-size de body est 16px, alors 25em = 400px */
+    display: flex;
 }
 
-.weather-side {
+.weather-card {
     position: relative;
-    height: 100%;
-    border-radius: 25px;
+    height: 100%; /* Prend toute la hauteur du parent .container */
+    border-radius: var(--border-radius-medium);
     background-image: url("https://images.unsplash.com/photo-1559963110-71b394e7494d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80");
-    width: 300px;
-    -webkit-box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.2);
-            box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.2);
-    -webkit-transition: -webkit-transform 300ms ease;
-    transition: -webkit-transform 300ms ease;
-    -o-transition: transform 300ms ease;
+    /* Largeur relative à la taille de la police du parent */
+    width: 18.75em; /* Si font-size de body est 16px, alors 18.75em = 300px */
+    box-shadow: var(--shadow-large);
     transition: transform 300ms ease;
-    transition: transform 300ms ease, -webkit-transform 300ms ease;
-    -webkit-transform: translateZ(0) scale(1.02) perspective(1000px);
-            transform: translateZ(0) scale(1.02) perspective(1000px);
-    float: left;
+    transform: translateZ(0) scale(1.02) perspective(62.5em); /* 1000px / 16px = 62.5em */
 }
 
-.weather-side:hover {
-    -webkit-transform: scale(1.1) perspective(1500px) rotateY(10deg);
-            transform: scale(1.1) perspective(1500px) rotateY(10deg);
+.weather-card:hover {
+    transform: scale(1.1) perspective(93.75em) rotateY(10deg); /* 1500px / 16px = 93.75em */
 }
 
-.weather-gradient {
+.weather-card__gradient {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     background-image: var(--gradient);
-    border-radius: 25px;
+    border-radius: var(--border-radius-medium);
     opacity: 0.8;
 }
 
-.date-container {
+.weather-card__date {
     position: absolute;
-    top: 25px;
-    left: 25px;
+    top: var(--spacing-large);
+    left: var(--spacing-large);
 }
 
-.date-dayname {
+.weather-card__day-name {
     margin: 0;
 }
 
-.date-day {
+.weather-card__day {
     display: block;
 }
 
-.location {
+.weather-card__location {
     display: inline-block;
-    margin-top: 10px;
+    margin-top: var(--spacing-small);
 }
 
-.location-icon {
+.weather-card__location-icon {
     display: inline-block;
+    /* Hauteur relative à la taille de la police de cet élément */
     height: 0.8em;
     width: auto;
-    margin-right: 5px;
+    margin-right: 0.3125em; /* 5px base 16px */
 }
 
-.weather-container {
+.weather-card__data {
     position: absolute;
-    bottom: 25px;
-    left: 25px;
+    bottom: var(--spacing-large);
+    left: var(--spacing-large);
 }
 
-.weather-icon.feather {
-    height: 60px;
+.weather-card__icon.feather {
+    /* Hauteur relative à la taille de la police de cet élément */
+    height: 3.75em; /* 60px base 16px */
     width: auto;
 }
 
-.weather-temp {
+.weather-card__temperature {
     margin: 0;
     font-weight: 700;
-    font-size: 4em;
+    font-size: var(--font-size-large); /* 4em était déjà relatif, mais on utilise notre variable */
 }
 
-.weather-desc {
+.weather-card__description {
     margin: 0;
 }
 
-.info-side {
+.weather-info {
     position: relative;
-    float: left;
     height: 100%;
-    padding-top: 25px;
+    padding-top: var(--spacing-large);
+    flex-grow: 1;
 }
 
-.today-info {
-    padding: 15px;
-    margin: 0 25px 25px 25px;
-    border-radius: 10px;
+.weather-info__today {
+    padding: var(--spacing-medium);
+    margin: 0 var(--spacing-large) var(--spacing-large) var(--spacing-large);
+    border-radius: var(--border-radius-small);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-small);
 }
 
-.today-info>div:not(:last-child) {
-    margin: 0 0 10px 0;
+.weather-info__today > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.today-info>div .title {
-    float: left;
+.weather-info__title {
     font-weight: 700;
+    color: var(--title-color);
 }
 
-.today-info>div .value {
-    float: right;
-}
-
-.week-list {
-    list-style-type: none;
+.weather-info__week {
     padding: 0;
-    margin: 10px 35px;
-    border-radius: 10px;
+    margin: var(--spacing-small) 2.1875em; /* 35px base 16px */
+    border-radius: var(--border-radius-small);
     background: #fff;
 }
 
-.week-list>li {
+.weather-info__week-list > li {
+    list-style-type: none;
     float: left;
-    padding: 15px;
+    padding: var(--spacing-small);
     cursor: pointer;
-    -webkit-transition: 200ms ease;
-    -o-transition: 200ms ease;
-    transition: 200ms ease;
-    border-radius: 10px;
+    transition: transform 200ms ease;
+    border-radius: var(--border-radius-small);
 }
 
-.week-list>li:hover {
-    -webkit-transform: scale(1.1);
-        -ms-transform: scale(1.1);
-            transform: scale(1.1);
+.weather-info__week-list > li:hover {
+    transform: scale(1.1);
     background: #fff;
     color: #222831;
-    -webkit-box-shadow: 0 0 40px -5px rgba(0, 0, 0, 0.2);
-            box-shadow: 0 0 40px -5px rgba(0, 0, 0, 0.2)
+    box-shadow: 0 0 2.5em -0.3125em rgba(0, 0, 0, 0.2) /* 40px -5px */;
 }
 
-.week-list>li.active {
+.weather-info__week-list > li.active {
     background: #fff;
     color: #222831;
-    border-radius: 10px;
+    border-radius: var(--border-radius-small);
 }
 
-.week-list>li .day-name {
+.weather-info__week-list > li .day-name {
     display: block;
-    margin: 10px 0 0 0;
+    margin: var(--spacing-small) 0 0 0;
     text-align: center;
 }
 
-.week-list>li .day-icon {
+.weather-info__week-list > li .day-icon {
     display: block;
-    height: 30px;
+    /* Hauteur relative à la taille de la police de cet élément */
+    height: 1.875em; /* 30px base 16px */
     width: auto;
     margin: 0 auto;
 }
 
-.week-list>li .day-temp {
+.weather-info__week-list > li .day-temp {
     display: block;
     text-align: center;
-    margin: 10px 0 0 0;
+    margin: var(--spacing-small) 0 0 0;
     font-weight: 700;
 }
 
-.location-container {
-    padding: 25px 35px;
+.weather-navigation {
+    padding: var(--spacing-large) 2.1875em; /* 35px base 16px */
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-small); /* Espacement entre les boutons */
 }
 
-.location-button {
+.button {
     outline: none;
     width: 100%;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
+    box-sizing: border-box;
     border: none;
-    border-radius: 25px;
-    padding: 10px;
+    border-radius: var(--border-radius-medium);
+    padding: 0.625em; /* 10px base 16px */
     font-family: 'Montserrat', sans-serif;
     background-image: var(--gradient);
     color: #ffffff;
     font-weight: 700;
-    -webkit-box-shadow: 0 0 30px -5px rgba(0, 0, 0, 0.25);
-            box-shadow: 0 0 30px -5px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 1.875em -0.3125em rgba(0, 0, 0, 0.25); /* 30px -5px */
     cursor: pointer;
-    -webkit-transition: -webkit-transform 200ms ease;
-    transition: -webkit-transform 200ms ease;
-    -o-transition: transform 200ms ease;
     transition: transform 200ms ease;
-    transition: transform 200ms ease, -webkit-transform 200ms ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.location-button:hover {
-    -webkit-transform: scale(0.95);
-        -ms-transform: scale(0.95);
-            transform: scale(0.95);
+.button:hover {
+    transform: scale(0.95);
 }
 
-.location-button .feather {
+.button .feather {
     height: 1em;
     width: auto;
-    margin-right: 5px;
+    margin-right: 0.3125em; /* 5px base 16px */
 }
 
-footer {
+.button__text {
+    margin-left: 0.3125em; /* 5px base 16px */
+}
+
+.page-footer {
     position: fixed;
     bottom: 0;
-    width: 100%;
+    width: 100vw;
     background-color: #222831;
     color: #ffffff;
     text-align: center;
-    padding: 10px 0;
+    padding: 0.625em 0; /* 10px base 16px */
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.9em;
+    font-size: var(--font-size-small); /* 0.9em était déjà relatif, on utilise notre variable */
 }
 
-footer a {
+.page-footer__copyright {
+    margin: 0;
+}
+
+.page-footer__link {
     color: #888888; /* Couleur plus sombre */
     text-decoration: none;
     transition: color 200ms ease;
 }
 
-footer a:hover {
+.page-footer__link:hover {
     color: #ffffff;
 }

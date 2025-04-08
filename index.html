@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MeteoJS - A simple weather app</title>
-    <meta name="description" content="MeteoJS - A simple weather app using JavaScript and OpenWeatherMap API">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title class="page__title">MétéoJS - Application météo en JavaScript</title>
+    <meta name="description" content="MétéoJS - Une application météo simple utilisant JavaScript et l'API d'OpenWeatherMap" class="page__description">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" class="page__favicon">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="js/config.js" defer></script>
@@ -14,54 +14,57 @@
 </head>
 <body>
     <div class="container">
-        <div class="weather-side">
-            <div class="weather-gradient"></div>
-            <div class="date-container">
-                <h2 class="date-dayname"></h2>
-                <span class="date-day"></span>
-                <!--<i id="return-icon" data-feather="rotate-cw" style="cursor: pointer;"></i>-->
-                <i class="location-icon" data-feather="map-pin"></i>
-                <span class="location"></span>
-            </div>
-            <div class="weather-container">
-                <i class="weather-icon" data-feather="sun"></i>
-                <h1 class="weather-temp"></h1>
-                <h3 class="weather-desc"></h3>
-            </div>
+
+        <div class="weather-card">
+            <div class="weather-card__gradient"></div>
+            <section class="weather-card__date">
+                <h2 class="weather-card__day-name"></h2>
+                <span class="weather-card__day"></span>
+                <i class="weather-card__location-icon" data-feather="map-pin"></i>
+                <span class="weather-card__location"></span>
+            </section>
+            <section class="weather-card__data">
+                <i class="weather-card__icon" data-feather="sun"></i>
+                <h1 class="weather-card__temperature"></h1>
+                <h3 class="weather-card__description"></h3>
+            </section>
         </div>
-        <div class="info-side">
-            <div class="today-info-container">
-                <div class="today-info">
-                    <div class="precipitation">
-                        <span class="title">Précipitation</span>
-                        <span class="value"></span>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="humidity">
-                        <span class="title">Humidité</span>
-                        <span class="value"></span>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="wind">
-                        <span class="title">Vent</span>
-                        <span class="value"></span>
-                        <div class="clear"></div>
-                    </div>
+
+        <div class="weather-info">
+            <section class="weather-info__today">
+                <div class="weather-info__precipitation">
+                    <span class="weather-info__title">Précipitation</span>
+                    <span class="weather-info__value"></span>
                 </div>
-            </div>
-            <div class="week-container">
-                <ul class="week-list">
+                <div class="weather-info__humidity">
+                    <span class="weather-info__title">Humidité</span>
+                    <span class="weather-info__value"></span>
+                </div>
+                <div class="weather-info__wind">
+                    <span class="weather-info__title">Vent</span>
+                    <span class="weather-info__value"></span>
+                </div>
+            </section>
+            <section class="weather-info__week">
+                <ul class="weather-info__week-list">
                 </ul>
-            </div>
-            <div class="location-container">
-                <button class="location-button"> <i data-feather="map-pin"></i><span>Changer de ville</span></button>
-                
-            </div>
+            </section>
+            <nav class="weather-navigation">
+                <button class="button button--location">
+                    <i data-feather="map-pin"></i>
+                    <span class="button__text">Changer de ville</span>
+                </button>
+                <button class="button button--today">
+                    <i data-feather="sun"></i> <span class="button__text">Aujourd'hui</span>
+                </button>
+            </nav>
         </div>
+
     </div>
-    <footer class="main-footer">
-        <p>Copyright © 2025 Jonathan GANIVET, tous droits réservés.<br>
-            Données météorologiques fournies par <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a></p>
+
+    <footer class="page-footer">
+        <p class="page-footer__copyright">Copyright © 2025 Jonathan GANIVET, tous droits réservés.<br>
+            Données météorologiques fournies par <a href="https://openweathermap.org/" target="_blank" class="page-footer__link">OpenWeatherMap</a></p>
     </footer>
 </body>
 </html>

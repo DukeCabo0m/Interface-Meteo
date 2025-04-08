@@ -24,10 +24,10 @@ function getWeatherIcon(iconCode) {
 /**
  * Met à jour l'image de fond de la page en fonction du nom de la ville.
  * @param {string} cityName - Le nom de la ville pour laquelle récupérer l'image.
- * @param {HTMLElement} weatherSide - L'élément HTML où afficher l'image de fond.
+ * @param {HTMLElement} weatherCard - L'élément HTML de la carte météo où afficher l'image de fond.
  * @returns {Promise<void>}
  */
-async function updateBackground(cityName, weatherSide) {
+async function updateBackground(cityName, weatherCard) {
     try {
         const unsplashUrl = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(cityName)}&per_page=1&orientation=landscape&client_id=${unsplashApiKey}`;
         const response = await fetch(unsplashUrl);
@@ -38,15 +38,15 @@ async function updateBackground(cityName, weatherSide) {
 
         if (data.results && data.results.length > 0) {
             const imageUrl = data.results[0].urls.regular;
-            weatherSide.style.backgroundImage = `url(${imageUrl})`;
-            weatherSide.style.backgroundSize = 'cover';
-            weatherSide.style.backgroundPosition = 'center';
+            weatherCard.style.backgroundImage = `url(${imageUrl})`;
+            weatherCard.style.backgroundSize = 'cover';
+            weatherCard.style.backgroundPosition = 'center';
         } else {
-             weatherSide.style.backgroundImage = 'url(https://images.unsplash.com/photo-1559963110-71b394e7494d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80)';
+             weatherCard.style.backgroundImage = 'url(https://images.unsplash.com/photo-1559963110-71b394e7494d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80)';
         }
     } catch (error) {
         console.error('Erreur lors de la récupération de l\'image depuis Unsplash :', error);
-        weatherSide.style.backgroundImage = 'url(https://images.unsplash.com/photo-1559963110-71b394e7494d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80)';
+        weatherCard.style.backgroundImage = 'url(https://images.unsplash.com/photo-1559963110-71b394e7494d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80)';
     }
 }
 
@@ -100,11 +100,11 @@ function updateMainWeather(forecastData, locationSpan, dateDayname, dateDay, wea
  * @param {HTMLElement} precipitationValue - L'élément HTML pour afficher la valeur de précipitation.
  * @param {HTMLElement} humidityValue - L'élément HTML pour afficher la valeur d'humidité.
  * @param {HTMLElement} windValue - L'élément HTML pour afficher la vitesse du vent.
- * @param {HTMLElement} weekList - L'élément HTML pour afficher les prévisions de la semaine.
- * @param {HTMLElement} weatherSide - L'élément HTML où afficher l'image de fond.
+ * @param {HTMLElement} weekList - L'élément HTML pour afficher les prévisions de la semaine (ul.weather-info__week-list).
+ * @param {HTMLElement} weatherCard - L'élément HTML de la carte météo où afficher l'image de fond (div.weather-card).
  * @returns {Promise<void>}
  */
-async function updateWeather(city, locationSpan, dateDayname, dateDay, weatherIcon, weatherTemp, weatherDesc, precipitationValue, humidityValue, windValue, weekList, weatherSide) {
+async function updateWeather(city, locationSpan, dateDayname, dateDay, weatherIcon, weatherTemp, weatherDesc, precipitationValue, humidityValue, windValue, weekList, weatherCard) {
     try {
         const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=fr`;
         const response = await fetch(apiUrl);
@@ -137,7 +137,7 @@ async function updateWeather(city, locationSpan, dateDayname, dateDay, weatherIc
         windValue.textContent = `${data.wind.speed} km/h`;
 
         feather.replace();
-        await updateBackground(data.name, weatherSide);
+        await updateBackground(data.name, weatherCard);
 
         const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&lang=fr&cnt=36`;
         const forecastResponse = await fetch(forecastUrl);
@@ -157,7 +157,17 @@ async function updateWeather(city, locationSpan, dateDayname, dateDay, weatherIc
             const listItem = document.createElement('li');
             listItem.innerHTML = `<i class="day-icon" data-feather="${dayIcon}"></i><span class="day-name">${dayName}</span><span class="day-temp">${dayTemp}°C</span>`;
             listItem.addEventListener('click', () => {
-                updateMainWeather(forecast, locationSpan, dateDayname, dateDay, weatherIcon, weatherTemp, weatherDesc, precipitationValue, humidityValue, windValue);
+                // Mise à jour des sélecteurs pour correspondre à la nouvelle structure HTML
+                const locationSpanMain = document.querySelector('.weather-card__location');
+                const dateDaynameMain = document.querySelector('.weather-card__day-name');
+                const dateDayMain = document.querySelector('.weather-card__day');
+                const weatherIconMain = document.querySelector('.weather-card__icon');
+                const weatherTempMain = document.querySelector('.weather-card__temperature');
+                const weatherDescMain = document.querySelector('.weather-card__description');
+                const precipitationValueMain = document.querySelector('.weather-info__precipitation .weather-info__value');
+                const humidityValueMain = document.querySelector('.weather-info__humidity .weather-info__value');
+                const windValueMain = document.querySelector('.weather-info__wind .weather-info__value');
+                updateMainWeather(forecast, locationSpanMain, dateDaynameMain, dateDayMain, weatherIconMain, weatherTempMain, weatherDescMain, precipitationValueMain, humidityValueMain, windValueMain);
             });
             weekList.appendChild(listItem);
         }
